@@ -42,7 +42,7 @@ export const marketplaceData = {
       title: 'Social Media Blitz Campaign',
       description: 'Complete social media campaign template with automated posting schedules, engagement strategies, and performance tracking. Perfect for product launches and brand awareness.',
       price: 49.99,
-      original_price: 79.99,
+      original_price: 80.00,
       pricing_type: 'paid',
       item_type: 'campaign_template',
       seller_name: 'Digital Marketing Pro',
