@@ -16,6 +16,7 @@ import {
   Legend, 
   ResponsiveContainer 
 } from 'recharts';
+import { marketplaceData } from './marketplace-data';
 
 // Icons and SVG components
 export const ChevronDownIcon = ({ className }) => (
@@ -756,5 +757,8 @@ export const mockData = {
       { channel: 'LinkedIn', revenue: 28000, cost: 7500, roi: 273 },
       { channel: 'Twitter', revenue: 18000, cost: 5000, roi: 260 }
     ]
-  }
+  },
+
+  // Marketplace data integration
+  marketplace: marketplaceData
 };

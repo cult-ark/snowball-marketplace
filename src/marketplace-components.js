@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { mockMarketplaceAPI } from './marketplace-data';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -402,7 +403,7 @@ export const PurchaseModal = ({ item, isOpen, onClose, onConfirm, loading }) => 
   );
 };
 
-// Marketplace API service
+// Marketplace API service with dummy data fallback
 export const marketplaceAPI = {
   getItems: async (filters = {}) => {
     try {
@@ -410,8 +411,9 @@ export const marketplaceAPI = {
       const response = await axios.get(`${API}/marketplace/?${params}`);
       return response.data;
     } catch (error) {
-      console.error('Failed to fetch marketplace items:', error);
-      return { items: [], total: 0 };
+      console.log('Backend unavailable, using dummy data for marketplace items');
+      // Use dummy data as fallback
+      return mockMarketplaceAPI.getItems(filters);
     }
   },
 
@@ -420,8 +422,9 @@ export const marketplaceAPI = {
       const response = await axios.get(`${API}/marketplace/stats`);
       return response.data;
     } catch (error) {
-      console.error('Failed to fetch marketplace stats:', error);
-      return null;
+      console.log('Backend unavailable, using dummy data for marketplace stats');
+      // Use dummy data as fallback
+      return mockMarketplaceAPI.getStats();
     }
   },
 
@@ -430,8 +433,9 @@ export const marketplaceAPI = {
       const response = await axios.get(`${API}/marketplace/categories`);
       return response.data;
     } catch (error) {
-      console.error('Failed to fetch categories:', error);
-      return { item_types: [], categories: [], pricing_types: [] };
+      console.log('Backend unavailable, using dummy data for marketplace categories');
+      // Use dummy data as fallback
+      return mockMarketplaceAPI.getCategories();
     }
   },
 
@@ -442,8 +446,40 @@ export const marketplaceAPI = {
       });
       return response.data;
     } catch (error) {
-      console.error('Purchase failed:', error);
-      throw error;
+      console.log('Backend unavailable, simulating purchase with dummy data');
+      // Simulate successful purchase for demo purposes
+      const item = mockMarketplaceAPI.getItem(itemId);
+      if (item) {
+        return {
+          success: true,
+          message: 'Purchase successful (demo mode)',
+          item: item,
+          transaction_id: `demo_${Date.now()}`
+        };
+      } else {
+        throw new Error('Item not found');
+      }
+    }
+  },
+
+  // Additional helper methods for dummy data
+  getItem: async (itemId) => {
+    try {
+      const response = await axios.get(`${API}/marketplace/item/${itemId}`);
+      return response.data;
+    } catch (error) {
+      console.log('Backend unavailable, using dummy data for item details');
+      return mockMarketplaceAPI.getItem(itemId);
+    }
+  },
+
+  getSeller: async (sellerId) => {
+    try {
+      const response = await axios.get(`${API}/marketplace/seller/${sellerId}`);
+      return response.data;
+    } catch (error) {
+      console.log('Backend unavailable, using dummy data for seller details');
+      return mockMarketplaceAPI.getSeller(sellerId);
     }
   }
 };
