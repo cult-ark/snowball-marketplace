@@ -1,4 +1,21 @@
 import React, { useState } from 'react';
+import { 
+  LineChart, 
+  Line, 
+  BarChart, 
+  Bar, 
+  PieChart, 
+  Pie, 
+  Cell, 
+  AreaChart, 
+  Area,
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  Legend, 
+  ResponsiveContainer 
+} from 'recharts';
 
 // Icons and SVG components
 export const ChevronDownIcon = ({ className }) => (
@@ -270,21 +287,141 @@ export const StatCard = ({ title, value, change, icon: Icon, trend }) => (
   </div>
 );
 
-// Chart Component (Mock)
-export const Chart = ({ title, data, type = 'line' }) => (
-  <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-    <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
-    <div className="h-64 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg flex items-center justify-center">
-      <div className="text-center">
-        <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-          <AnalyticsIcon className="w-8 h-8 text-white" />
+// Enhanced Chart Component with Recharts
+export const Chart = ({ title, data, type = 'line' }) => {
+  const renderChart = () => {
+    if (!data || data.length === 0) {
+      return (
+        <div className="h-64 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <AnalyticsIcon className="w-8 h-8 text-white" />
+            </div>
+            <p className="text-gray-600">No data available</p>
+            <p className="text-sm text-gray-500 mt-1">Chart will display when data is provided</p>
+          </div>
         </div>
-        <p className="text-gray-600">Interactive {type} chart</p>
-        <p className="text-sm text-gray-500 mt-1">Real-time data visualization</p>
-      </div>
+      );
+    }
+
+    const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7c7c', '#8dd1e1'];
+
+    switch (type) {
+      case 'line':
+        return (
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey={Object.keys(data[0])[0]} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              {Object.keys(data[0]).slice(1).map((key, index) => (
+                <Line 
+                  key={key}
+                  type="monotone" 
+                  dataKey={key} 
+                  stroke={colors[index % colors.length]} 
+                  strokeWidth={2}
+                  dot={{ r: 4 }}
+                  activeDot={{ r: 6 }}
+                />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+        );
+
+      case 'bar':
+        return (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey={Object.keys(data[0])[0]} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              {Object.keys(data[0]).slice(1).map((key, index) => (
+                <Bar 
+                  key={key}
+                  dataKey={key} 
+                  fill={colors[index % colors.length]}
+                  radius={[4, 4, 0, 0]}
+                />
+              ))}
+            </BarChart>
+          </ResponsiveContainer>
+        );
+
+      case 'pie':
+      case 'doughnut':
+        return (
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={type === 'doughnut' ? 60 : 0}
+                outerRadius={100}
+                paddingAngle={5}
+                dataKey="value"
+                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color || colors[index % colors.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        );
+
+      case 'area':
+        return (
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey={Object.keys(data[0])[0]} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              {Object.keys(data[0]).slice(1).map((key, index) => (
+                <Area
+                  key={key}
+                  type="monotone"
+                  dataKey={key}
+                  stackId="1"
+                  stroke={colors[index % colors.length]}
+                  fill={colors[index % colors.length]}
+                  fillOpacity={0.6}
+                />
+              ))}
+            </AreaChart>
+          </ResponsiveContainer>
+        );
+
+      default:
+        return (
+          <div className="h-64 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg flex items-center justify-center">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AnalyticsIcon className="w-8 h-8 text-white" />
+              </div>
+              <p className="text-gray-600">Unsupported chart type: {type}</p>
+              <p className="text-sm text-gray-500 mt-1">Supported types: line, bar, pie, doughnut, area</p>
+            </div>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
+      {renderChart()}
     </div>
-  </div>
-);
+  );
+};
 
 // Project Card Component
 export const ProjectCard = ({ project }) => (
@@ -566,5 +703,51 @@ export const mockData = {
       completionRate: 91,
       status: 'Online'
     }
-  ]
+  ],
+
+  // Chart data for different visualization types
+  chartData: {
+    campaignPerformance: [
+      { month: 'Jan', impressions: 2400, clicks: 240, conversions: 24 },
+      { month: 'Feb', impressions: 1398, clicks: 210, conversions: 18 },
+      { month: 'Mar', impressions: 9800, clicks: 980, conversions: 89 },
+      { month: 'Apr', impressions: 3908, clicks: 470, conversions: 41 },
+      { month: 'May', impressions: 4800, clicks: 520, conversions: 52 },
+      { month: 'Jun', impressions: 3800, clicks: 380, conversions: 35 },
+      { month: 'Jul', impressions: 4300, clicks: 450, conversions: 48 }
+    ],
+    
+    aiToolUsage: [
+      { tool: 'Content Gen', usage: 245, efficiency: 92 },
+      { tool: 'Image Creator', usage: 189, efficiency: 88 },
+      { tool: 'Video Editor', usage: 156, efficiency: 85 },
+      { tool: 'Voice Synth', usage: 132, efficiency: 90 },
+      { tool: 'Strategy AI', usage: 98, efficiency: 94 }
+    ],
+    
+    audienceEngagement: [
+      { name: 'Social Media', value: 35, color: '#8884d8' },
+      { name: 'Email', value: 25, color: '#82ca9d' },
+      { name: 'Search', value: 20, color: '#ffc658' },
+      { name: 'Display', value: 15, color: '#ff7c7c' },
+      { name: 'Video', value: 5, color: '#8dd1e1' }
+    ],
+    
+    performanceOverTime: [
+      { date: '2024-01', ctr: 2.1, cpc: 0.45, roas: 3.2 },
+      { date: '2024-02', ctr: 2.3, cpc: 0.42, roas: 3.5 },
+      { date: '2024-03', ctr: 2.8, cpc: 0.38, roas: 4.1 },
+      { date: '2024-04', ctr: 3.1, cpc: 0.35, roas: 4.3 },
+      { date: '2024-05', ctr: 3.4, cpc: 0.33, roas: 4.8 },
+      { date: '2024-06', ctr: 3.2, cpc: 0.36, roas: 4.5 }
+    ],
+    
+    channelPerformance: [
+      { channel: 'Google Ads', revenue: 45000, cost: 12000, roi: 275 },
+      { channel: 'Facebook', revenue: 38000, cost: 9500, roi: 300 },
+      { channel: 'Instagram', revenue: 32000, cost: 8000, roi: 300 },
+      { channel: 'LinkedIn', revenue: 28000, cost: 7500, roi: 273 },
+      { channel: 'Twitter', revenue: 18000, cost: 5000, roi: 260 }
+    ]
+  }
 };

@@ -162,8 +162,8 @@ const Dashboard = () => {
       
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Chart title="Campaign Performance" type="line" />
-        <Chart title="AI Tool Usage" type="bar" />
+        <Chart title="Campaign Performance" data={mockData.chartData.campaignPerformance} type="line" />
+        <Chart title="AI Tool Usage" data={mockData.chartData.aiToolUsage} type="bar" />
       </div>
       
       {/* Recent Projects */}
@@ -422,8 +422,8 @@ const Campaigns = () => {
       
       {/* Campaign Performance Chart */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Chart title="Campaign Performance Trends" type="line" />
-        <Chart title="Audience Engagement" type="doughnut" />
+        <Chart title="Campaign Performance Trends" data={mockData.chartData.performanceOverTime} type="line" />
+        <Chart title="Audience Engagement" data={mockData.chartData.audienceEngagement} type="doughnut" />
       </div>
     </div>
   );
@@ -794,10 +794,10 @@ const Analytics = () => {
       
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Chart title="Performance Over Time" type="line" />
-        <Chart title="Audience Demographics" type="pie" />
-        <Chart title="Channel Performance" type="bar" />
-        <Chart title="Engagement Metrics" type="area" />
+        <Chart title="Performance Over Time" data={mockData.chartData.performanceOverTime} type="line" />
+        <Chart title="Audience Demographics" data={mockData.chartData.audienceEngagement} type="pie" />
+        <Chart title="Channel Performance" data={mockData.chartData.channelPerformance} type="bar" />
+        <Chart title="Engagement Metrics" data={mockData.chartData.campaignPerformance} type="area" />
       </div>
     </div>
   );
