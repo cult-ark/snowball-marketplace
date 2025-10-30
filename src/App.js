@@ -42,24 +42,14 @@ const API = `${BACKEND_URL}/api`;
 const apiService = {
   // Dashboard
   getDashboardStats: async () => {
-    try {
-      const response = await axios.get(`${API}/dashboard/stats`);
-      return response.data;
-    } catch (error) {
-      console.error('Failed to fetch dashboard stats:', error);
-      return mockData.dashboardStats;
-    }
+    // Return mock data directly for demo purposes
+    return mockData.dashboardStats;
   },
 
   // Campaigns
   getCampaigns: async () => {
-    try {
-      const response = await axios.get(`${API}/campaigns`);
-      return response.data;
-    } catch (error) {
-      console.error('Failed to fetch campaigns:', error);
-      return mockData.projects; // fallback to mock data
-    }
+    // Return mock data directly for demo purposes
+    return mockData.projects;
   },
 
   // AI Tools
@@ -170,7 +160,7 @@ const Dashboard = () => {
       <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Campaigns</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {campaigns.slice(0, 3).map((campaign, index) => (
+          {Array.isArray(campaigns) && campaigns.slice(0, 3).map((campaign, index) => (
             <div key={index} className="transform hover:scale-105 transition-all duration-200">
               <ProjectCard project={campaign} />
             </div>
@@ -412,7 +402,7 @@ const Campaigns = () => {
       <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-4">All Campaigns</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {campaigns.map((campaign, index) => (
+          {Array.isArray(campaigns) && campaigns.map((campaign, index) => (
             <div key={index} className="transform hover:scale-105 transition-all duration-200">
               <ProjectCard project={campaign} />
             </div>

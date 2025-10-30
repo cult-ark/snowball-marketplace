@@ -573,6 +573,13 @@ export const TeamMemberCard = ({ member }) => (
 
 // Mock Data
 export const mockData = {
+  dashboardStats: {
+    active_campaigns: 24,
+    total_impressions: 2400000,
+    total_ai_generations: 156,
+    total_team_members: 12
+  },
+
   stats: [
     { title: 'Active Campaigns', value: '24', change: '+12%', icon: CampaignIcon, trend: 'up' },
     { title: 'Total Impressions', value: '2.4M', change: '+8%', icon: EyeIcon, trend: 'up' },
