@@ -1,0 +1,207 @@
+/* MARKOS - The AI Marketing Operating System - Professional Design System */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8fafc;
+  color: #1a202c;
+}
+
+.App {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions for interactive elements */
+button, .card, .nav-item {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover effects for cards */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Gradient backgrounds for branding */
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Professional button styles */
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Status indicators */
+.status-active {
+  color: #10b981;
+  background-color: #d1fae5;
+}
+
+.status-paused {
+  color: #f59e0b;
+  background-color: #fef3c7;
+}
+
+.status-planning {
+  color: #6b7280;
+  background-color: #f3f4f6;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Focus states for accessibility */
+button:focus, input:focus, select:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a202c;
+    color: #f7fafc;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  
+  .mobile-responsive {
+    padding: 1rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+
+/* Custom component styles */
+.sidebar-nav {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.header-gradient {
+  background: linear-gradient(90deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.chart-container {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* Professional shadows */
+.shadow-professional {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-professional-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Text selection */
+::selection {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* Custom utilities */
+.text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(10px);
+}
+
+/* Professional spacing */
+.section-spacing {
+  padding: 2rem 0;
+}
+
+.card-spacing {
+  padding: 1.5rem;
+}
+
+/* Brand colors */
+.brand-blue {
+  color: #3b82f6;
+}
+
+.brand-purple {
+  color: #8b5cf6;
+}
+
+.brand-bg-blue {
+  background-color: #3b82f6;
+}
+
+.brand-bg-purple {
+  background-color: #8b5cf6;
+}
